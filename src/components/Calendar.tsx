@@ -62,7 +62,7 @@ const Calendar: React.FC = () => {
                       <div className="p-1 bg-white/20 backdrop-blur-md rounded-md">
                         <Camera className="w-3 h-3" />
                       </div>
-                      <span className="text-[8px] font-black uppercase tracking-[0.3em] opacity-80 text-white/90 text-nowrap"></span>
+                      <span className="text-[8px] font-black uppercase tracking-[0.3em] opacity-80 text-white/90 text-nowrap">Collection 2026</span>
                     </div>
                     <div>
                       <h1 className="text-xl font-serif font-black italic leading-tight">Serene<br />Horizons</h1>
@@ -119,51 +119,26 @@ const Calendar: React.FC = () => {
             </div>
           </aside>
 
-          {/* 2. Center Section: Main Calendar Grid */}
-          <section className="flex-1 flex flex-col bg-white overflow-hidden border-r border-gray-100">
-            <CalendarGrid
-              currentMonth={currentMonth}
-              onPrevMonth={handlePrevMonth}
-              onNextMonth={handleNextMonth}
-              selectedStartDate={selectedStartDate}
-              selectedEndDate={selectedEndDate}
-              hoveredDate={hoveredDate}
-              onDateClick={handleDateClick}
-              onMouseEnter={setHoveredDate}
-              onMouseLeave={() => setHoveredDate(null)}
-              notes={notes}
-            />
-          </section>
+          {/* 2. Center & Right Section (Single Instance) */}
+          <div className="flex-1 flex flex-col lg:flex-row min-h-0 overflow-y-auto lg:overflow-hidden">
+            {/* Calendar Grid */}
+            <section className="flex-1 flex flex-col bg-white overflow-hidden border-r border-gray-100 min-h-[500px] lg:min-h-0">
+              <CalendarGrid
+                currentMonth={currentMonth}
+                onPrevMonth={handlePrevMonth}
+                onNextMonth={handleNextMonth}
+                selectedStartDate={selectedStartDate}
+                selectedEndDate={selectedEndDate}
+                hoveredDate={hoveredDate}
+                onDateClick={handleDateClick}
+                onMouseEnter={setHoveredDate}
+                onMouseLeave={() => setHoveredDate(null)}
+                notes={notes}
+              />
+            </section>
 
-          {/* 3. Right Section: Notes Sidebar (Desktop Only) */}
-          <aside className="hidden lg:flex lg:w-[28%] flex-col bg-white overflow-hidden">
-            <NotesPanel
-              currentMonth={currentMonth}
-              selectedStartDate={selectedStartDate}
-              selectedEndDate={selectedEndDate}
-              notes={notes}
-              onAddNote={addNote}
-              onDeleteNote={deleteNote}
-              onClearSelection={clearSelection}
-            />
-          </aside>
-
-          {/* Mobile Only: Section Tabs or Scroll (Mobile is fine as per requirements) */}
-          <div className="lg:hidden flex-1 overflow-y-auto">
-            {/* The calendar first, then notes below for mobile */}
-            <CalendarGrid
-              currentMonth={currentMonth}
-              onPrevMonth={handlePrevMonth}
-              onNextMonth={handleNextMonth}
-              selectedStartDate={selectedStartDate}
-              selectedEndDate={selectedEndDate}
-              hoveredDate={hoveredDate}
-              onDateClick={handleDateClick}
-              onMouseEnter={setHoveredDate}
-              onMouseLeave={() => setHoveredDate(null)}
-              notes={notes}
-            />
-            <div className="border-t border-gray-100">
+            {/* Notes Sidebar */}
+            <aside className="lg:w-[28%] flex flex-col bg-white overflow-hidden border-t lg:border-t-0 border-gray-100 min-h-[400px] lg:min-h-0">
               <NotesPanel
                 currentMonth={currentMonth}
                 selectedStartDate={selectedStartDate}
@@ -173,7 +148,7 @@ const Calendar: React.FC = () => {
                 onDeleteNote={deleteNote}
                 onClearSelection={clearSelection}
               />
-            </div>
+            </aside>
           </div>
         </motion.div>
       </main>
