@@ -62,7 +62,7 @@ const Calendar: React.FC = () => {
                       <div className="p-1 bg-white/20 backdrop-blur-md rounded-md">
                         <Camera className="w-3 h-3" />
                       </div>
-                      <span className="text-[8px] font-black uppercase tracking-[0.3em] opacity-80 text-white/90 text-nowrap">Collection 2026</span>
+                      <span className="text-[8px] font-black uppercase tracking-[0.3em] opacity-80 text-white/90 text-nowrap"></span>
                     </div>
                     <div>
                       <h1 className="text-xl font-serif font-black italic leading-tight">Serene<br />Horizons</h1>
@@ -93,7 +93,7 @@ const Calendar: React.FC = () => {
                 </div>
                 <p className="text-[11px] text-gray-600 font-serif italic leading-relaxed">
                   "In every walk with nature, one receives far more than he seeks."
-                  <span className="block mt-2 font-sans font-black text-[8px] uppercase tracking-widest text-gray-400 not-italic">— John Muir</span>
+                  <span className="block mt-2 font-sans font-black text-[8px] uppercase tracking-widest text-gray-400 not-italic">— Ankit Sharma</span>
                 </p>
               </div>
 
@@ -114,7 +114,7 @@ const Calendar: React.FC = () => {
             {/* Decorative Branding */}
             <div className="mt-auto pt-8 flex items-center gap-3 opacity-20">
               <div className="h-px flex-1 bg-gray-300" />
-              <span className="text-[9px] font-black tracking-[0.5em] text-gray-500 uppercase">Archive</span>
+              <span className="text-[9px] font-black tracking-[0.5em] text-gray-500 uppercase">Ankit Sharma</span>
               <div className="h-px flex-1 bg-gray-300" />
             </div>
           </aside>
