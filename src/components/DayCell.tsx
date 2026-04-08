@@ -1,14 +1,9 @@
 'use client';
 
 import React from 'react';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { cn } from '@/utils/cn';
 import { motion } from 'framer-motion';
-import { format, isSameDay, isWithinInterval } from 'date-fns';
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { format } from 'date-fns';
 
 interface DayCellProps {
   date: Date;
@@ -21,7 +16,9 @@ interface DayCellProps {
   onClick: (date: Date) => void;
   onMouseEnter: (date: Date) => void;
   onMouseLeave: () => void;
+  onKeyDown?: (e: React.KeyboardEvent) => void;
   hasNote?: boolean;
+  tabIndex?: number;
 }
 
 const DayCell: React.FC<DayCellProps> = ({
@@ -36,41 +33,74 @@ const DayCell: React.FC<DayCellProps> = ({
   onMouseEnter,
   onMouseLeave,
   hasNote,
+  tabIndex = 0,
 }) => {
   const isSelected = isSelectedStart || isSelectedEnd;
 
+  // Range highlight logic
+  const rangeClasses = cn(
+    isInRange && 'bg-blue-50/50',
+    isSelectedStart && 'bg-blue-600 rounded-l-lg shadow-md z-10',
+    isSelectedEnd && 'bg-blue-600 rounded-r-lg shadow-md z-10',
+    isSelectedStart && isSelectedEnd && 'rounded-lg'
+  );
+
   return (
     <motion.div
-      whileHover={{ scale: isCurrentMonth ? 1.05 : 1 }}
-      whileTap={{ scale: isCurrentMonth ? 0.95 : 1 }}
+      role="button"
+      aria-label={`${format(date, 'MMMM d, yyyy')}${isToday ? ', today' : ''}${hasNote ? ', has note' : ''}`}
+      tabIndex={isCurrentMonth ? tabIndex : -1}
+      whileHover={isCurrentMonth ? { backgroundColor: 'rgba(59, 130, 246, 0.03)' } : {}}
       onClick={() => isCurrentMonth && onClick(date)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          isCurrentMonth && onClick(date);
+        } else {
+          onKeyDown?.(e);
+        }
+      }}
       onMouseEnter={() => isCurrentMonth && onMouseEnter(date)}
       onMouseLeave={() => isCurrentMonth && onMouseLeave()}
       className={cn(
-        'relative h-16 sm:h-20 md:h-24 border-t border-l flex flex-col items-start p-1 transition-colors cursor-pointer',
-        !isCurrentMonth && 'bg-gray-50 text-gray-400 cursor-default',
-        isWeekend && isCurrentMonth && 'bg-orange-50/30',
-        isInRange && 'bg-blue-100/50',
-        isSelectedStart && 'rounded-tl-lg bg-blue-600 text-white z-10',
-        isSelectedEnd && 'rounded-br-lg bg-blue-600 text-white z-10',
-        isToday && !isSelected && 'border-2 border-blue-500 font-bold text-blue-600'
+        'relative h-20 sm:h-24 md:h-28 border-r border-b border-gray-100 flex flex-col items-start p-3 transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset',
+        !isCurrentMonth && 'bg-gray-50/30 text-gray-300 cursor-default',
+        isWeekend && isCurrentMonth && 'bg-orange-50/10',
+        isToday && !isSelected && 'bg-blue-50/30'
       )}
     >
-      <span className="text-sm font-medium">{format(date, 'd')}</span>
-      
-      {hasNote && (
-        <div className={cn(
-          "absolute bottom-1 right-1 w-2 h-2 rounded-full",
-          isSelected ? "bg-white" : "bg-blue-500"
-        )} />
+      {/* Selection Background Layer */}
+      <div className={cn(
+        'absolute inset-y-1.5 inset-x-1 transition-all duration-200',
+        rangeClasses
+      )} />
+
+      {/* Date Number */}
+      <div className="relative z-10 flex items-center justify-center w-8 h-8">
+        <span className={cn(
+          'text-sm font-semibold transition-colors',
+          isCurrentMonth ? 'text-gray-900' : 'text-gray-300',
+          isSelected && 'text-white',
+          isToday && !isSelected && 'text-blue-600 ring-2 ring-blue-600 rounded-full flex items-center justify-center w-7 h-7'
+        )}>
+          {format(date, 'd')}
+        </span>
+      </div>
+
+      {/* Note Indicator */}
+      {hasNote && !isSelected && (
+        <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-orange-400 shadow-sm z-20" />
       )}
-      
-      {isSelectedStart && (
-        <span className="text-[10px] mt-auto uppercase tracking-tighter opacity-80">Start</span>
+
+      {/* Today Label (Small) */}
+      {isToday && isCurrentMonth && !isSelected && (
+        <span className="absolute bottom-2 left-3 text-[8px] font-black uppercase tracking-widest text-blue-600 opacity-60">
+          Today
+        </span>
       )}
-      {isSelectedEnd && (
-        <span className="text-[10px] mt-auto uppercase tracking-tighter opacity-80 self-end">End</span>
-      )}
+
+      {/* Interactive Paper Texture */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/paper-fibers.png')]" />
     </motion.div>
   );
 };
