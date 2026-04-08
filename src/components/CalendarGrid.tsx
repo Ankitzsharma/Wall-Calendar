@@ -79,18 +79,18 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
   };
 
   return (
-    <div className="flex-1 flex flex-col relative">
+    <div className="flex-1 flex flex-col min-h-0 relative">
       {/* Calendar Header */}
-      <div className="flex items-center justify-between px-8 py-6 bg-white border-b border-gray-100">
+      <div className="flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 shrink-0">
         <div className="flex items-center gap-4">
-          <div className="p-2.5 bg-blue-600 rounded-xl shadow-lg shadow-blue-100">
-            <CalendarIcon className="w-5 h-5 text-white" />
+          <div className="p-2 bg-blue-600 rounded-xl shadow-lg shadow-blue-100">
+            <CalendarIcon className="w-4 h-4 text-white" />
           </div>
           <div className="flex flex-col">
-            <h2 className="text-2xl font-serif font-black text-gray-900 tracking-tight leading-none">
+            <h2 className="text-xl font-serif font-black text-gray-900 tracking-tight leading-none">
               {getMonthName(currentMonth)}
             </h2>
-            <span className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase mt-1">
+            <span className="text-[9px] text-gray-400 font-black tracking-[0.2em] uppercase mt-0.5">
               {getYear(currentMonth)}
             </span>
           </div>
@@ -99,33 +99,33 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
         <div className="flex items-center gap-1 bg-gray-50 p-1 rounded-xl border border-gray-100">
           <button
             onClick={onPrevMonth}
-            className="p-2 rounded-lg hover:bg-white hover:text-blue-600 transition-all active:scale-90 group"
+            className="p-1.5 rounded-lg hover:bg-white hover:text-blue-600 transition-all active:scale-90 group"
             aria-label="Previous Month"
           >
-            <ChevronLeft className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+            <ChevronLeft className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 transition-colors" />
           </button>
-          <div className="w-px h-4 bg-gray-200 mx-1" />
+          <div className="w-px h-3 bg-gray-200 mx-1" />
           <button
             onClick={onNextMonth}
-            className="p-2 rounded-lg hover:bg-white hover:text-blue-600 transition-all active:scale-90 group"
+            className="p-1.5 rounded-lg hover:bg-white hover:text-blue-600 transition-all active:scale-90 group"
             aria-label="Next Month"
           >
-            <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+            <ChevronRight className="w-3.5 h-3.5 text-gray-400 group-hover:text-blue-600 transition-colors" />
           </button>
         </div>
       </div>
 
       {/* Week Days Header */}
-      <div className="grid grid-cols-7 bg-gray-50/50 border-b border-gray-100">
+      <div className="grid grid-cols-7 bg-gray-50/50 border-b border-gray-100 shrink-0">
         {weekDays.map((day) => (
-          <div key={day} className="py-3 text-center text-[9px] font-black text-gray-400 uppercase tracking-[0.2em]">
+          <div key={day} className="py-2.5 text-center text-[8px] font-black text-gray-400 uppercase tracking-[0.2em]">
             {day}
           </div>
         ))}
       </div>
 
       {/* Days Grid Container */}
-      <div className="flex-1 relative overflow-hidden bg-white">
+      <div className="flex-1 relative overflow-hidden bg-white min-h-0">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={currentMonth.toISOString()}
@@ -133,7 +133,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="grid grid-cols-7 border-l border-t border-gray-100"
+            className="grid grid-cols-7 auto-rows-fr border-l border-t border-gray-100 h-full"
           >
             {days.map((day, index) => (
               <DayCell
@@ -158,15 +158,15 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
       </div>
 
       {/* Footer hint */}
-      <div className="px-8 py-3 bg-gray-50/30 border-t border-gray-100 flex justify-between items-center text-[9px] text-gray-400 font-black uppercase tracking-widest">
-        <span>Click to select date or range</span>
-        <div className="flex gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded bg-blue-600" />
+      <div className="px-8 py-2.5 bg-gray-50/30 border-t border-gray-100 flex justify-between items-center text-[8px] text-gray-400 font-black uppercase tracking-widest shrink-0">
+        <span>Select a date or range</span>
+        <div className="flex gap-4">
+          <div className="flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-sm bg-blue-600" />
             <span>Selected</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-orange-400" />
+          <div className="flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-orange-400" />
             <span>Journal</span>
           </div>
         </div>

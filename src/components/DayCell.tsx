@@ -32,6 +32,7 @@ const DayCell: React.FC<DayCellProps> = ({
   onClick,
   onMouseEnter,
   onMouseLeave,
+  onKeyDown,
   hasNote,
   tabIndex = 0,
 }) => {
@@ -63,7 +64,7 @@ const DayCell: React.FC<DayCellProps> = ({
       onMouseEnter={() => isCurrentMonth && onMouseEnter(date)}
       onMouseLeave={() => isCurrentMonth && onMouseLeave()}
       className={cn(
-        'relative h-20 sm:h-24 md:h-28 border-r border-b border-gray-100 flex flex-col items-start p-3 transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset',
+        'relative flex-1 min-h-0 border-r border-b border-gray-100 flex flex-col items-start p-2 transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset',
         !isCurrentMonth && 'bg-gray-50/30 text-gray-300 cursor-default',
         isWeekend && isCurrentMonth && 'bg-orange-50/10',
         isToday && !isSelected && 'bg-blue-50/30'
@@ -71,17 +72,17 @@ const DayCell: React.FC<DayCellProps> = ({
     >
       {/* Selection Background Layer */}
       <div className={cn(
-        'absolute inset-y-1.5 inset-x-1 transition-all duration-200',
+        'absolute inset-y-1 inset-x-0.5 transition-all duration-200',
         rangeClasses
       )} />
 
       {/* Date Number */}
-      <div className="relative z-10 flex items-center justify-center w-8 h-8">
+      <div className="relative z-10 flex items-center justify-center w-6 h-6">
         <span className={cn(
-          'text-sm font-semibold transition-colors',
+          'text-[10px] font-semibold transition-colors',
           isCurrentMonth ? 'text-gray-900' : 'text-gray-300',
           isSelected && 'text-white',
-          isToday && !isSelected && 'text-blue-600 ring-2 ring-blue-600 rounded-full flex items-center justify-center w-7 h-7'
+          isToday && !isSelected && 'text-blue-600 ring-1 ring-blue-600 rounded-full flex items-center justify-center w-5 h-5'
         )}>
           {format(date, 'd')}
         </span>
@@ -89,12 +90,12 @@ const DayCell: React.FC<DayCellProps> = ({
 
       {/* Note Indicator */}
       {hasNote && !isSelected && (
-        <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-orange-400 shadow-sm z-20" />
+        <div className="absolute top-2 right-2 w-1 h-1 rounded-full bg-orange-400 shadow-sm z-20" />
       )}
 
       {/* Today Label (Small) */}
       {isToday && isCurrentMonth && !isSelected && (
-        <span className="absolute bottom-2 left-3 text-[8px] font-black uppercase tracking-widest text-blue-600 opacity-60">
+        <span className="absolute bottom-1.5 left-2 text-[7px] font-black uppercase tracking-widest text-blue-600 opacity-60">
           Today
         </span>
       )}
