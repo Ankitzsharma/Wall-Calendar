@@ -4,20 +4,20 @@ A production-quality, highly polished interactive "Wall Calendar" component buil
 
 ##  Features
 
-- ** Wall Calendar Aesthetic**: Realistic design with hero images, ring binder decorations, and elegant typography.
-- ** Intuitive Date Selection**: 
+- **Wall Calendar Aesthetic**: Realistic design with hero images, ring binder decorations, and elegant typography.
+- **Intuitive Date Selection**: 
   - Select start and end dates with visual range highlighting.
   - Supports reverse selection (end date before start date).
   - Hover effects for real-time range feedback.
-- ** Integrated Notes Panel**:
+- **Integrated Notes Panel**:
   - Add notes for specific dates, date ranges, or the entire month.
   - Persistent storage using `localStorage`.
   - Clean, journal-like UI for viewing and managing entries.
-- ** Responsive & Interactive**:
+- **Responsive & Interactive**:
   - Side-by-side layout on desktop, stacked on mobile.
   - Smooth transitions using Framer Motion.
   - Micro-interactions on date hover and click.
-- **🛠 Advanced Engineering**:
+- **Advanced Engineering**:
   - Custom hook (`useCalendar`) for clean state management.
   - Utility-first styling with Tailwind CSS.
   - Date manipulation with `date-fns`.
@@ -46,7 +46,7 @@ A production-quality, highly polished interactive "Wall Calendar" component buil
     dateHelpers.ts     # Date manipulation utilities
 ```
 
-## 🛠 Setup Instructions
+##  Setup Instructions
 
 1. **Clone the repository**:
    ```bash
